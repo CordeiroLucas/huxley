@@ -1,10 +1,10 @@
 /*
-Questão de tabuleiro de xadrez
-O código tem que saber se o rei "K" está em cheque ou não
-Irá receber uma representação de um tabuleiro de xadrez 8x8
- sendo "-" uma posição sem nenhuma peça e "K/k, P/p, T/t, C/c, B/b, Q/q" sendo representações de 
- K -> Rei, P -> Peão, T -> Torre, C -> Cavalo, B -> Bispo, Q -> Rainha respectivamente.
- K -> King, P -> Pawn, T -> Tower, C -> Chess Horse, B -> Bishop, Q -> Queen.
+QUESTÃO:
+
+José Gabriel é um estudante que gosta muito de aprender coisas novas, e a sua mais nova empreitada é aprender a jogar xadrez. Mas tudo ainda está um pouco confuso
+para ele, pois apesar de entender muito bem como cada peça pode se movimentar, ele ainda tem muita dificuldade para perceber se o jogo está em uma situação de 
+xeque (Situação quando o seu rei está sendo atacado por alguma peça do seu inimigo).Sua missão então é elaborar um programa que, dada a configuração atual das 
+peças no tabuleiro, diga se o rei de José Gabriel está em xeque.
 */
 
 
