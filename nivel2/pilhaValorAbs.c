@@ -71,7 +71,7 @@ void push(struct pilha *apilha, int numero)
 	//GUARDAR
 	if (numero >= 0 && numero <= 1000) {
 		if (!novoelemento) {
-			printf("ERRO DE ALOCA��O\n");
+			printf("ERRO DE ALOCAÇÃO\n");
 		} else {
 			novoelemento->valor = numero;
 			novoelemento->next = apilha->topo;
