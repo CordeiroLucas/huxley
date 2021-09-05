@@ -1,13 +1,3 @@
-/*
-QUESTÃO
-José Gabriel é um estudante que gosta muito de aprender coisas novas, e a sua mais nova empreitada é aprender a jogar xadrez. Mas tudo ainda está um pouco confuso
-para ele, pois apesar de entender muito bem como cada peça pode se movimentar, ele ainda tem muita dificuldade para perceber se o jogo está em uma situação de 
-xeque (Situação quando o seu rei está sendo atacado por alguma peça do seu inimigo).Sua missão então é elaborar um programa que, dada a configuração atual das 
-peças no tabuleiro, diga se o rei de José Gabriel está em xeque.
-*/
-
-
-
 #include <stdio.h>
 #include <string.h>
 
@@ -15,10 +5,6 @@ peças no tabuleiro, diga se o rei de José Gabriel está em xeque.
 #define X 8
 #define Y 8
 
-
-/*
-AINDA NÃO CONCLUIDO
-*/
 
 typedef struct dadosPosicao {
 	int tipo;
@@ -36,9 +22,9 @@ int main(void)
 {
 	dadosPosicao peca[X][Y];
 	int i, j, pecaValida;
-	
-	for (i = 0; i < X; i++) {
-		for (j = 0; j < Y; j++) {
+
+	for (j = Y-1; j >= 0 ; j--) {
+		for (i = 0; i < X; i++) {
 			pecaValida = 0;
 			while (pecaValida == 0) {
 				peca[i][j].tipo = getchar();
@@ -52,16 +38,24 @@ int main(void)
 		}
 	}
 
-	/*
-	ESSA SÉRIE DE PRINTS É PARA CHECAGEM SE O CÓDIGO ESTÁ
-	FUNCIONANDO E RECONHECENDO CORRETAMENTE CADA POSIÇÃO
-	*/
 
-	/*
+	
+	printf("\n\n\n(x, y)\n");
+
+	for (j = Y-1; j >= 0 ; j--) {
+		for (i = 0; i < X; i++) {
+			printf("(%d,%d)", i, j);
+			printf(" ");
+		}
+		printf(" \n");
+	}
+
+	
 	printf("\n\n\nÉ PEÇA?\n");
-
-	for (i = 0; i < X; i++) {
-		for (j = 0; j < Y; j++) {
+	
+	/*
+	for (j = Y-1; j >= 0 ; j--) {
+		for (i = 0; i < X; i++) {
 			if (peca[i][j].isValid == 1)
 				printf("Y");
 			else 
@@ -74,8 +68,8 @@ int main(void)
 	
 	printf("\n\n\nÉ REI?\n");
 
-	for (i = 0; i < X; i++) {
-		for (j = 0; j < Y; j++) {
+	for (j = Y-1; j >= 0 ; j--) {
+		for (i = 0; i < X; i++) {
 			if (peca[i][j].isRei == 1) 
 				printf("Y");
 			else 
@@ -88,8 +82,8 @@ int main(void)
 
 	printf("\n\n\nÉ DE JOSÉ?\n");
 
-	for (i = 0; i < X; i++) {
-		for (j = 0; j < Y; j++) {
+	for (j = Y-1; j >= 0 ; j--) {
+		for (i = 0; i < X; i++) {
 			if (peca[i][j].isDeJose == 1) 
 				printf("Y");
 			else 
@@ -99,35 +93,32 @@ int main(void)
 		}
 		printf(" \n");
 	}
-
+	
 	printf("\n\n\nTIPO PEÇA\n");
 
-	for (i = 0; i < X; i++) {
-		for (j = 0; j < Y; j++) {
+	for (j = Y-1; j >= 0 ; j--) {
+		for (i = 0; i < X; i++) {
 
 			if (peca[i][j].isDeJose == 1 && peca[i][j].isValid == 1) 
-				printf("J");
-
-			else if (peca[i][j].isDeJose == 0 && peca[i][j].isValid == 1)
-				printf("Ñ");
+				printf("João ");
 			
 			if (tipoPeca(i, j, peca) == 0) 
-				printf("KG");
+				printf("KinG");
 
 			else if (tipoPeca(i, j, peca) == 1)
-				printf("PE");
+				printf("PeãO");
 
 			else if (tipoPeca(i, j, peca) == 2)
-				printf("TR");
+				printf("TorrE");
 
 			else if (tipoPeca(i, j, peca) == 3)
-				printf("CV");
+				printf("CavaL");
 
 			else if (tipoPeca(i, j, peca) == 4)
-				printf("BP");
+				printf("BisP");
 
 			else if (tipoPeca(i, j, peca) == 5)
-				printf("QN");
+				printf("QueN");
 
 			else
 				printf("   ");
@@ -136,11 +127,12 @@ int main(void)
 		}
 		printf(" \n");
 	}
+	
 	*/
 
 	pecaValida = 0;
-	for (i = 0; i < X; i++){
-		for (j = 0; j < Y; j++){
+	for (j = Y-1; j >= 0 ; j--) {
+		for (i = 0; i < X; i++) {
 			if (peca[i][j].isRei == 1 && peca[i][j].isDeJose == 1) {
 				pecaValida = 1; 
 				break;
@@ -161,14 +153,6 @@ int main(void)
 
 	return 0;
 }
-
-
-/*
-Função "isValid" checa se certa posição na matriz[X][Y] é uma peça válida;
-Também atualiza o dados "isRei" e se ela é de José "isDeJose";
-Caso ela não encontre uma peça válida, ela coloca os dados como "0" sendo assim, uma posição sem peça;
-O else é para caso ele receba qualquer outro caracter que não seja os do Xadrez.
-*/
 
 int isValid (int x, int y, dadosPosicao aPeca[X][Y]) 
 {
@@ -211,7 +195,7 @@ int isValid (int x, int y, dadosPosicao aPeca[X][Y])
 
 /*
 
-A função "tipoPeca" terá como retorno as seguintes peças:
+retornos tipoPeca:
 
 '-' -> vazio -> Tipo -1
 
@@ -248,44 +232,41 @@ int tipoPeca (int x, int y, dadosPosicao aPeca[X][Y])
 		return -1;
 }
 
-
-
-
-/*
-Ainda não concluídas...
-*/
-
 int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 {
 	int i, j;
 
-	for (i=x;i<X;i++) {
-		if ((tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
-			return 1;
-		else if (tipoPeca(i, y, aPeca) == -1)
-			continue;
+	if (x != X-1 && y != Y-1) {
+		for (i=x;i<X;i++) {
+			if ((tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
+				return 1;
+			else if (tipoPeca(i, y, aPeca) == -1)
+				continue;
+		}
+
+		for (j=y;j<Y;j++) {
+			if ((tipoPeca(x, j, aPeca) == 2 || tipoPeca(x, j, aPeca) == 5) && (aPeca[x][j].isDeJose != aPeca[x][y].isDeJose))
+				return 1;
+			else if (tipoPeca(x, j, aPeca) == -1)
+				continue;
+		}
+
+	} if (x != 0 && y != 0) {	
+		for (i=x;i>=0;i--) {
+			if ((tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
+				return 1;
+			else if (tipoPeca(i, y, aPeca) == -1)
+				continue;
+		}
+
+		for (j=y;j>=0;j--) {
+			if ((tipoPeca(x, j, aPeca) == 2 || tipoPeca(x, j, aPeca) == 5) && (aPeca[x][j].isDeJose != aPeca[x][y].isDeJose))
+				return 1;
+			else if (tipoPeca(x, j, aPeca) == -1)
+				continue;
+		}
 	}
 	
-	for (j=y;j<Y;j++) {
-		if ((tipoPeca(x, j, aPeca) == 2 || tipoPeca(x, j, aPeca) == 5) && (aPeca[x][j].isDeJose != aPeca[x][y].isDeJose))
-			return 1;
-		else if (tipoPeca(x, j, aPeca) == -1)
-			continue;
-	}
-
-	for (i=x;i>=0;i--) {
-		if ((tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
-			return 1;
-		else if (tipoPeca(i, y, aPeca) == -1)
-			continue;
-	}
-
-	for (j=y;j>=0;j--) {
-		if ((tipoPeca(x, j, aPeca) == 2 || tipoPeca(x, j, aPeca) == 5) && (aPeca[x][j].isDeJose != aPeca[x][y].isDeJose))
-			return 1;
-		else if (tipoPeca(x, j, aPeca) == -1)
-			continue;
-	}
 
 	return 0;	
 }
@@ -294,6 +275,7 @@ int cheque_bispo (int x, int y, dadosPosicao apeca[X][Y])
 {
 	return 0;
 }
+
 
 /*
 void visao_bispo (int x, int y, dadosPosicao aPeca[X][Y])
