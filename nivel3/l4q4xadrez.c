@@ -249,6 +249,13 @@ int tipoPeca (int x, int y, dadosPosicao aPeca[X][Y])
 		return -1;
 }
 
+
+
+
+/*
+Ainda não concluídas...
+*/
+
 int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 {
 	int i, j;
@@ -288,10 +295,6 @@ int cheque_bispo (int x, int y, dadosPosicao apeca[X][Y])
 {
 	return 0;
 }
-
-/*
-Ainda não concluídas...
-*/
 
 /*
 void visao_bispo (int x, int y, dadosPosicao aPeca[X][Y])
