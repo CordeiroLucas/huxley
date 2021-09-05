@@ -1,10 +1,20 @@
 #include <stdio.h>
 #include <string.h>
 
+/*
+ENUNCIADO QUESTAO
+
+José Gabriel é um estudante que gosta muito de aprender coisas novas, e a sua mais nova empreitada é aprender a jogar xadrez.
+Mas tudo ainda está um pouco confuso para ele, pois apesar de entender muito bem como cada peça pode se movimentar, ele ainda
+tem muita dificuldade para perceber se o jogo está em uma situação de xeque (Situação quando o seu rei está sendo atacado por
+ alguma peça do seu inimigo). Sua missão então é elaborar um programa que, dada a configuração atual das peças no tabuleiro,
+ diga se o rei de José Gabriel está em xeque.
+*/
+
+
 /*DEFINIR TAMANHO MATRIZ XADREZ*/
 #define X 8
 #define Y 8
-
 
 typedef struct dadosPosicao {
 	int tipo;
