@@ -1,3 +1,14 @@
+/*
+Questão de tabuleiro de xadrez
+O código tem que saber se o rei "K" está em cheque ou não
+Irá receber uma representação de um tabuleiro de xadrez 8x8
+ sendo "-" uma posição sem nenhuma peça e "K/k, P/p, T/t, C/c, B/b, Q/q" sendo representações de 
+ K -> Rei, P -> Peão, T -> Torre, C -> Cavalo, B -> Bispo, Q -> Rainha respectivamente.
+ K -> King, P -> Pawn, T -> Tower, C -> Chess Horse, B -> Bishop, Q -> Queen.
+*/
+
+
+
 #include <stdio.h>
 #include <string.h>
 
@@ -5,6 +16,10 @@
 #define X 8
 #define Y 8
 
+
+/*
+AINDA NÃO CONCLUIDO
+*/
 
 typedef struct dadosPosicao {
 	int tipo;
@@ -38,8 +53,10 @@ int main(void)
 		}
 	}
 
-
-	
+	/*
+	ESSA SÉRIE DE PRINTS É PARA CHECAGEM SE O CÓDIGO ESTÁ
+	FUNCIONANDO E RECONHECENDO CORRETAMENTE CADA POSIÇÃO
+	*/
 
 	/*
 	printf("\n\n\nÉ PEÇA?\n");
@@ -146,6 +163,14 @@ int main(void)
 	return 0;
 }
 
+
+/*
+Função "isValid" checa se certa posição na matriz[X][Y] é uma peça válida;
+Também atualiza o dados "isRei" e se ela é de José "isDeJose";
+Caso ela não encontre uma peça válida, ela coloca os dados como "0" sendo assim, uma posição sem peça;
+O else é para caso ele receba qualquer outro caracter que não seja os do Xadrez.
+*/
+
 int isValid (int x, int y, dadosPosicao aPeca[X][Y]) 
 {
 	/* MAIÚSCULO */
@@ -187,7 +212,7 @@ int isValid (int x, int y, dadosPosicao aPeca[X][Y])
 
 /*
 
-retornos tipoPeca:
+A função "tipoPeca" terá como retorno as seguintes peças:
 
 '-' -> vazio -> Tipo -1
 
@@ -264,6 +289,9 @@ int cheque_bispo (int x, int y, dadosPosicao apeca[X][Y])
 	return 0;
 }
 
+/*
+Ainda não concluídas...
+*/
 
 /*
 void visao_bispo (int x, int y, dadosPosicao aPeca[X][Y])
