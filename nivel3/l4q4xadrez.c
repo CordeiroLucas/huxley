@@ -11,10 +11,10 @@ tem muita dificuldade para perceber se o jogo está em uma situação de xeque (
  diga se o rei de José Gabriel está em xeque.
 */
 
-
 /*DEFINIR TAMANHO MATRIZ XADREZ*/
 #define X 8
 #define Y 8
+
 
 typedef struct dadosPosicao {
 	int tipo;
@@ -48,8 +48,8 @@ int main(void)
 		}
 	}
 
+	/*
 
-	
 	printf("\n\n\n(x, y)\n");
 
 	for (j = Y-1; j >= 0 ; j--) {
@@ -60,10 +60,10 @@ int main(void)
 		printf(" \n");
 	}
 
+
 	
 	printf("\n\n\nÉ PEÇA?\n");
 	
-	/*
 	for (j = Y-1; j >= 0 ; j--) {
 		for (i = 0; i < X; i++) {
 			if (peca[i][j].isValid == 1)
@@ -281,13 +281,17 @@ int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 	return 0;	
 }
 
+
+/*
+
 int cheque_bispo (int x, int y, dadosPosicao apeca[X][Y])
 {
+
 	return 0;
 }
 
 
-/*
+
 void visao_bispo (int x, int y, dadosPosicao aPeca[X][Y])
 {
 	int i, j;
