@@ -302,66 +302,70 @@ int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 
 int cheque_bispo (int x, int y, dadosPosicao aPeca[X][Y])
 {
-	int i;
+	int i, j;
 
 	/*
 	Para a diagonal y+ e x+ (y positivo, x positivo)
 	*/
 
-	for (i=x+1;i<X;i++) {
-		y++;
-
+	for (i=x;i<X;i++) {
+		
 		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
 			return 1;
 		else if (tipoPeca(i, y, aPeca) == -1)
+			y++;
 			continue;
-		if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
-			return 0;
+		// if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
+		// 	return 0;
+		
+
 	}
 
 	/*
 	Para a diagonal y- e x+ (y negativo, x positivo)
 	*/
 
-	for (i=x+1;i<X;i++) {
+	for (i=x;i<X;i++) {
 		y--;
-
 		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
 			return 1;
 		else if (tipoPeca(i, y, aPeca) == -1)
+			
 			continue;
-		if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
-			return 0;
+		// if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
+		// 	return 0;
 	}
 	
 	/*
 	Para a diagonal y+ e x- (y positivo, x negativo)
 	*/
 
-	for (i=x-1;i>=0;i--) {
+	for (i=x;i>=0;i--) {
 		y++;
-
 		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca)) == 5 && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
 			return 1;
 		else if (tipoPeca(i, y, aPeca) == -1)
+			
 			continue;
-		if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
-			return 0;
+		// if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
+		// 	return 0;
+		
 	}
 
 	/*
 	Para a diagonal y- e x- (y negativo, x negativo)
 	*/
 
-	for (i=x-1;i>=0;i--) {
+	for (i=x;i>=0;i--) {
 		y--;
 		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
 			return 1;
 		else if (tipoPeca(i, y, aPeca) == -1)
-			continue;
-		if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
-			return 0;
 			
+			continue;
+		// if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
+		// 	return 0;
+		
 	}
 
 
