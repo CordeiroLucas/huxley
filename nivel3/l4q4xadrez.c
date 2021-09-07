@@ -247,12 +247,21 @@ int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 	int i, j;
 
 	if (x != X-1 && y != Y-1) {
+
+		/*
+		Para o x+ (x positivo)
+		*/
+
 		for (i=x;i<X;i++) {
 			if ((tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
 				return 1;
 			else if (tipoPeca(i, y, aPeca) == -1)
 				continue;
 		}
+
+		/*
+		Para o y+ (y positivo)
+		*/
 
 		for (j=y;j<Y;j++) {
 			if ((tipoPeca(x, j, aPeca) == 2 || tipoPeca(x, j, aPeca) == 5) && (aPeca[x][j].isDeJose != aPeca[x][y].isDeJose))
@@ -262,12 +271,22 @@ int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 		}
 
 	} if (x != 0 && y != 0) {	
+
+		/*
+		Para o x- (x negativo)
+		*/
+
 		for (i=x;i>=0;i--) {
 			if ((tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
 				return 1;
 			else if (tipoPeca(i, y, aPeca) == -1)
 				continue;
 		}
+
+
+		/*
+		Para o y- (y negativo)
+		*/
 
 		for (j=y;j>=0;j--) {
 			if ((tipoPeca(x, j, aPeca) == 2 || tipoPeca(x, j, aPeca) == 5) && (aPeca[x][j].isDeJose != aPeca[x][y].isDeJose))
@@ -281,16 +300,75 @@ int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 	return 0;	
 }
 
-
-/*
-
-int cheque_bispo (int x, int y, dadosPosicao apeca[X][Y])
+int cheque_bispo (int x, int y, dadosPosicao aPeca[X][Y])
 {
+	int i;
+
+	/*
+	Para a diagonal y+ e x+ (y positivo, x positivo)
+	*/
+
+	for (i=x+1;i<X;i++) {
+		y++;
+
+		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
+			return 1;
+		else if (tipoPeca(i, y, aPeca) == -1)
+			continue;
+		if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
+			return 0;
+	}
+
+	/*
+	Para a diagonal y- e x+ (y negativo, x positivo)
+	*/
+
+	for (i=x+1;i<X;i++) {
+		y--;
+
+		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
+			return 1;
+		else if (tipoPeca(i, y, aPeca) == -1)
+			continue;
+		if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
+			return 0;
+	}
+	
+	/*
+	Para a diagonal y+ e x- (y positivo, x negativo)
+	*/
+
+	for (i=x-1;i>=0;i--) {
+		y++;
+
+		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca)) == 5 && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
+			return 1;
+		else if (tipoPeca(i, y, aPeca) == -1)
+			continue;
+		if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
+			return 0;
+	}
+
+	/*
+	Para a diagonal y- e x- (y negativo, x negativo)
+	*/
+
+	for (i=x-1;i>=0;i--) {
+		y--;
+		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
+			return 1;
+		else if (tipoPeca(i, y, aPeca) == -1)
+			continue;
+		if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
+			return 0;
+			
+	}
+
 
 	return 0;
 }
 
-
+/*
 
 void visao_bispo (int x, int y, dadosPosicao aPeca[X][Y])
 {
@@ -332,6 +410,8 @@ void visao_king (int x, int y, dadosPosicao aPeca[X][Y])
 int isCheque (int x, int y, dadosPosicao aPeca[X][Y]) 
 {	
 	if (cheque_torre(x, y, aPeca) == 1)  
+		return 1;
+	else if (cheque_bispo(x, y, aPeca) == 1)
 		return 1;
 	else 
 		return 0;
