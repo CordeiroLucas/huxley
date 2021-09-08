@@ -25,8 +25,11 @@ typedef struct dadosPosicao {
 
 int isValid (int x, int y, dadosPosicao aPeca[X][Y]);
 int tipoPeca (int x, int y, dadosPosicao aPeca[X][Y]);
-int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y]);
+int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y], int check);
 int isCheque (int x, int y, dadosPosicao aPeca[X][Y]);
+int isChequeRei (int x, int y, dadosPosicao aPeca[X][Y]);
+
+int testando (int x, int y, dadosPosicao aPeca[X][Y], int sentido);
 
 int main(void) 
 {
@@ -242,23 +245,23 @@ int tipoPeca (int x, int y, dadosPosicao aPeca[X][Y])
 		return -1;
 }
 
-int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
+int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y], int check)
 {
 	int i, j;
 
-	if (x != X-1 && y != Y-1) {
-
+	if (check == 1) {
 		/*
 		Para o x+ (x positivo)
 		*/
-
+		
 		for (i=x;i<X;i++) {
 			if ((tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
 				return 1;
-			else if (tipoPeca(i, y, aPeca) == -1)
-				continue;
+			else if (tipoPeca(i, y, aPeca) != -1)
+				return 0;
 		}
 
+	} else if (check == 2) {
 		/*
 		Para o y+ (y positivo)
 		*/
@@ -266,11 +269,11 @@ int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 		for (j=y;j<Y;j++) {
 			if ((tipoPeca(x, j, aPeca) == 2 || tipoPeca(x, j, aPeca) == 5) && (aPeca[x][j].isDeJose != aPeca[x][y].isDeJose))
 				return 1;
-			else if (tipoPeca(x, j, aPeca) == -1)
-				continue;
+			else if (tipoPeca(x, j, aPeca) != -1)
+				return 0;
 		}
 
-	} if (x != 0 && y != 0) {	
+	} else if (check == 3) {
 
 		/*
 		Para o x- (x negativo)
@@ -279,10 +282,13 @@ int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 		for (i=x;i>=0;i--) {
 			if ((tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
 				return 1;
-			else if (tipoPeca(i, y, aPeca) == -1)
-				continue;
-		}
+			else if (tipoPeca(i, y, aPeca) != -1) {
+				return 0;
+			}
+				
+		};
 
+	} else if (check == 4) {
 
 		/*
 		Para o y- (y negativo)
@@ -291,86 +297,109 @@ int cheque_torre (int x, int y, dadosPosicao aPeca[X][Y])
 		for (j=y;j>=0;j--) {
 			if ((tipoPeca(x, j, aPeca) == 2 || tipoPeca(x, j, aPeca) == 5) && (aPeca[x][j].isDeJose != aPeca[x][y].isDeJose))
 				return 1;
-			else if (tipoPeca(x, j, aPeca) == -1)
-				continue;
-		}
-	}
-	
-
-	return 0;	
+			else if (tipoPeca(x, j, aPeca) != -1)
+				return 0;
+		}	
+	}		
 }
 
-int cheque_bispo (int x, int y, dadosPosicao aPeca[X][Y])
+int cheque_bispo (int x, int y, dadosPosicao aPeca[X][Y], int lado)
 {
 	int i, j;
 
-	/*
-	Para a diagonal y+ e x+ (y positivo, x positivo)
-	*/
 
-	for (i=x;i<X;i++) {
-		
-		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
-			return 1;
-		else if (tipoPeca(i, y, aPeca) == -1)
-			y++;
-			continue;
-		// if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
-		// 	return 0;
-		
-
-	}
-
-	/*
-	Para a diagonal y- e x+ (y negativo, x positivo)
-	*/
-
-	for (i=x;i<X;i++) {
-		y--;
-		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
-			return 1;
-		else if (tipoPeca(i, y, aPeca) == -1)
-			
-			continue;
-		// if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
-		// 	return 0;
-	}
+	if (lado == 1) {
 	
-	/*
-	Para a diagonal y+ e x- (y positivo, x negativo)
-	*/
+		/*
+		Para a diagonal x+ e y+ (x positivo, y positivo)
+		*/
 
-	for (i=x;i>=0;i--) {
-		y++;
-		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca)) == 5 && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
-			return 1;
-		else if (tipoPeca(i, y, aPeca) == -1)
-			
-			continue;
-		// if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
-		// 	return 0;
-		
+		for (i=x, j=y;i<X, j<Y;i++, j++) {
+			if ((tipoPeca(i, j, aPeca) == 4 || tipoPeca(i, j, aPeca) == 5) && (aPeca[i][j].isDeJose != aPeca[x][j].isDeJose))
+				return 1;
+			else if (tipoPeca(i, y, aPeca) == -1) 
+				return 0;
+		}
+
+	} else if (lado == 2) {
+
+		/*
+		Para a diagonal x+ e y- (x positivo, y negativo)
+		*/
+
+		for (i=x, j=y;i<X, j>=0;i++, j--) {
+			if ((tipoPeca(i, j, aPeca) == 4 || tipoPeca(i, j, aPeca) == 5) && (aPeca[i][j].isDeJose != aPeca[x][j].isDeJose))
+				return 1;
+			else if (tipoPeca(i, y, aPeca) == -1) 
+				return 0;
+		}
+
+	} else if (lado == 3) {
+
+		/*
+		Para a diagonal x- e y+ (x negativo, y positivo)
+		*/
+
+		for (i=x, j=y;i>=0, j<Y;i--, j++) {
+			if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
+				return 1;
+			else if (tipoPeca(i, y, aPeca) == -1) 
+				return 0;
+		}	
+
+	} else if (lado == 4) {
+		for (i=x, j=y;i>=0, j>=0;i--, j--) {
+			if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
+				return 1;
+			else if (tipoPeca(i, y, aPeca) == -1) 
+				return 0;
+		}		
 	}
 
+
+
+	
+
 	/*
-	Para a diagonal y- e x- (y negativo, x negativo)
+	Para a diagonal x- e y- (x negativo, y negativo)
 	*/
 
-	for (i=x;i>=0;i--) {
-		y--;
-		if ((tipoPeca(i, y, aPeca) == 4 || tipoPeca(i, y, aPeca) == 5) && (aPeca[i][y].isDeJose != aPeca[x][y].isDeJose))
-			return 1;
-		else if (tipoPeca(i, y, aPeca) == -1)
-			
-			continue;
-		// if (tipoPeca(i, y, aPeca) != 4 && tipoPeca(i, y, aPeca) != 5 && tipoPeca(i, y, aPeca) != -1)
-		// 	return 0;
-		
-	}
+
 
 
 	return 0;
 }
+
+// int isChequeRei (int x, int y, dadosPosicao aPeca[X][Y])
+// {
+// 	int i, j;
+
+// 	/*
+// 	Eu só desisti de fazer algo otimizado, aí aqui ele checa todas as posições ao redor do rei primeiro
+// 	*/
+
+// 	if ((tipoPeca(i, j, aPeca) == 5 || tipoPeca(i, j, aPeca) == 2 || tipoPeca(i, j, aPeca) == 0) && aPeca[i][j].isDeJose != aPeca[i][j].isDeJose)
+// 		return 1;
+// 	else if ((tipoPeca(x+1, y, aPeca) == 5 || tipoPeca(x+1, y, aPeca) == 2 || tipoPeca(x+1, y, aPeca) == 0) && aPeca[x][y].isDeJose != aPeca[x+1][y].isDeJose)
+// 		return 1;
+// 	else if ((tipoPeca(x, y-1, aPeca) == 5 || tipoPeca(x, y-1, aPeca) == 2 || tipoPeca(x, y-1, aPeca) == 0) && aPeca[x][y].isDeJose != aPeca[x][y-1].isDeJose)
+// 		return 1;
+// 	else if ((tipoPeca(x, y+1, aPeca) == 5 || tipoPeca(x, y+1, aPeca) == 2 || tipoPeca(x, y+1, aPeca) == 0) && aPeca[x][y].isDeJose != aPeca[x][y+1].isDeJose)
+// 		return 1;
+// 	else if ((tipoPeca(x-1, y-1, aPeca) == 5 || tipoPeca(x-1, y-1, aPeca) == 4 || tipoPeca(x-1, y-1, aPeca) == 0) && aPeca[x][y].isDeJose != aPeca[x-1][y-1].isDeJose) 
+// 		return 1;
+// 	else if ((tipoPeca(x+1, y+1, aPeca) == 5 || tipoPeca(x+1, y+1, aPeca) == 4 || tipoPeca(x+1, y+1, aPeca) == 1 || tipoPeca(x+1, y+1, aPeca) == 0) && aPeca[x][y].isDeJose != aPeca[x+1][y+1].isDeJose) 
+// 		return 1;
+// 	else if ((tipoPeca(x+1, y-1, aPeca) == 5 || tipoPeca(x+1, y-1, aPeca) == 4 || tipoPeca(x+1, y-1, aPeca) == 0) && aPeca[x][y].isDeJose != aPeca[x+1][y-1].isDeJose) 
+// 		return 1;
+// 	else if ((tipoPeca(x-1, y+1, aPeca) == 5 || tipoPeca(x-1, y+1, aPeca) == 4 || tipoPeca(x-1, y+1, aPeca) == 1 || tipoPeca(x-1, y+1, aPeca) == 0 ) && aPeca[x][y].isDeJose != aPeca[x-1][y+1].isDeJose) 
+// 		return 1;
+// 	else
+// 		return 0;
+
+// 	return 0;
+
+// }
 
 /*
 
@@ -413,10 +442,52 @@ void visao_king (int x, int y, dadosPosicao aPeca[X][Y])
 
 int isCheque (int x, int y, dadosPosicao aPeca[X][Y]) 
 {	
-	if (cheque_torre(x, y, aPeca) == 1)  
-		return 1;
-	else if (cheque_bispo(x, y, aPeca) == 1)
-		return 1;
-	else 
-		return 0;
+	int i;
+	for (i = 1; i < 5; i++) {
+		if (testando(x, y, aPeca, i)) 
+			return 1;
+	}
+	return 0;
+}
+
+int testando (int x, int y, dadosPosicao aPeca[X][Y], int sentido) 
+{
+	int i;
+	if (sentido == 1) {
+		for (i = x; i < X; i++) {
+			if (tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) {
+				return 1;
+			} else if (tipoPeca(i, y, aPeca) != -1) {
+				return 0;
+			}
+		}
+	} 
+	else if (sentido == 2) {
+		for (i = x; i >= 0; i--) {
+			if (tipoPeca(i, y, aPeca) == 2 || tipoPeca(i, y, aPeca) == 5) {
+				return 1;
+			} else if (tipoPeca(i, y, aPeca) != -1) {
+				return 0;
+			}
+		}
+	}
+	else if (sentido == 3) {
+		for (i = y; i < Y; i++) {
+			if (tipoPeca(x, i, aPeca) == 2 || tipoPeca(x, i, aPeca) == 5) {
+				return 1;
+			} else if (tipoPeca(x, i, aPeca) != -1) {
+				return 0;
+			}
+		}	
+	}
+	else if (sentido == 4) {
+		for (i = y; i >= 0; i--) {
+			if (tipoPeca(x, i, aPeca) == 2 || tipoPeca(x, i, aPeca) == 5) {
+				return 1;
+			} else if (tipoPeca(x, i, aPeca) != -1) {
+				return 0;
+			}
+		}		
+	}
+
 }
