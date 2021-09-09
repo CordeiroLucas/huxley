@@ -52,16 +52,20 @@ int main(void)
 
 	init(alista);
 
-	scanf("%s", selecao);
+	while (1) {
+		scanf("%s", selecao);
 
-	if (strcmp(selecao, "INSERIR") == 0) {
-		scanf("%s %f %d", nomeItem, &valor, &quantidade);
-	
-		insere (alista, nomeItem, valor, quantidade);
+		if (strcmp(selecao, "INSERIR") == 0) {
+			scanf("%s %f %d", nomeItem, &valor, &quantidade);
+		
+			insere (alista, nomeItem, valor, quantidade);
+
+		} else if (strcmp(selecao, "CONSULTAR") == 0) 
+			printTotalLista(alista);
+
+		else if (strcmp(selecao, "SAIR") == 0) 
+			break;
 	}
-
-	printTotalLista(alista);
-
 	return 0;
 }
 
