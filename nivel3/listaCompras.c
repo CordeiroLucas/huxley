@@ -79,6 +79,49 @@ int main(void)
 	return 0;
 }
 
+void printTotalLista (lista *alista)
+{
+	printf("R$%.2f\n", alista->totalLista);
+}
+
+void init (lista *alista) 
+{	
+	alista->head = NULL;
+	alista->tail = NULL;
+	alista->totalLista = 0;
+}
+
+void printItensLista (lista *alista)
+{
+	item *node;
+	node = (item*) malloc(sizeof(item));
+
+	if (alista != NULL) {
+		for (node=alista->head; node!=NULL; node=node->next)
+			printf("|NOME: %s UN: R$%.2f | QUANT.: %d TOTAL: R$%.2f|\n", node->nome, node->preco, node->quantidade, node->totalItem);
+	}
+
+}
+
+void procurarNome (lista *alista, char nomeItem[TAM]) 
+{
+	item *node;
+	node = (item*) malloc(sizeof(item));
+
+	if (alista->head != NULL) {
+		for (node=alista->head; node!=NULL; node=node->next) {
+			if (strcmp(nomeItem, node->nome) == 0) {
+				printf("- R$%.2f\n- %d\n", node->preco, node->quantidade);
+				return;
+			} else continue;
+		}
+
+		printf("%s nao foi encontrado.\n", nomeItem);
+	} else 
+		printf("Lista Vazia!!\n");
+}
+
+
 void insere (lista *alista, char nomeItem[TAM], float valor, int quantidade)
 {	
 	item *novo = (item*) malloc(sizeof(item));
@@ -105,44 +148,5 @@ void insere (lista *alista, char nomeItem[TAM], float valor, int quantidade)
 	}
 }
 
-void printItensLista (lista *alista)
-{
-	item *node;
-	node = (item*) malloc(sizeof(item));
 
-	if (alista != NULL) {
-		for (node=alista->head; node!=NULL; node=node->next)
-			printf("|NOME: %s UN: R$%.2f | QUANT.: %d TOTAL: R$%.2f|\n", node->nome, node->preco, node->quantidade, node->totalItem);
-	}
 
-}
-
-void procurarNome (lista *alista, char nomeItem[TAM]) 
-{
-	item *node;
-	node = (item*) malloc(sizeof(item));
-
-	if (alista != NULL) {
-		for (node=alista->head; node!=NULL; node=node->next) {
-			if (strcmp(nomeItem, node->nome) == 0) {
-				printf("- R$%.2f\n- %d\n", node->preco, node->quantidade);
-				return;
-			} else continue;
-		}
-
-		printf("%s nao foi encontrado.\n", nomeItem);
-	} else 
-		printf("EMPTY STACK!!\n");
-}
-
-void init (lista *alista) 
-{	
-	alista->head = NULL;
-	alista->tail = NULL;
-	alista->totalLista = 0;
-}
-
-void printTotalLista (lista *alista)
-{
-	printf("R$%.2f\n", alista->totalLista);
-}
