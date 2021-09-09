@@ -38,7 +38,7 @@ typedef struct lista {
 }lista;
 
 void init (lista *alista);
-void atualizarPrecoLista (lista *alista);
+float atualizarPrecoLista (lista *alista);
 void printItensLista (lista *alista);
 void procurarNome (lista *alista, char nomeItem[TAM]);
 void inserirItem (lista *alista, char nomeItem[TAM], float valor, int quatidade);
@@ -77,7 +77,7 @@ int main(void)
 			atualizarPrecoLista(alista);
 		
 		} else if (strcmp(selecao, "CONSULTAR") == 0) {
-			printf("R$%.2f\n", alista->totalLista);
+			printf("\nAtualmente a lista esta em R$%.2f\n", alista->totalLista);
 
  		} else if (strcmp(selecao, "PROCURAR") == 0) {
 			scanf("%s", nomeItem);
@@ -93,13 +93,14 @@ int main(void)
 	return 0;
 }
 
-void atualizarPrecoLista (lista *alista)
+float atualizarPrecoLista (lista *alista)
 {
 	item *node;
 	node = (item*) malloc(sizeof(item));
 	alista->totalLista = 0;
 
 	if (alista != NULL) {
+
 		for (node=alista->head; node!=NULL; node=node->next)
 			alista->totalLista = alista->totalLista + node->totalItem;
 	}
