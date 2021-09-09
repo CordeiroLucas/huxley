@@ -21,10 +21,10 @@ PROCURAR NOME - procura se o produto de Nome está na lista e retorna seu Nome, 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#define TAM 40
 
 typedef struct item {
-	char nome[20];
+	char nome[TAM];
 	float preco;
 	int quantidade;
 	float totalItem;
@@ -39,12 +39,14 @@ typedef struct lista {
 
 void init (lista *alista);
 void printTotalLista (lista *alista);
-void insere (lista *alista, char nomeItem[20], float valor, int quatidade);
+void printItensLista (lista *alista);
+void procurarNome (lista *alista, char nomeItem[TAM]);
+void insere (lista *alista, char nomeItem[TAM], float valor, int quatidade);
 
 int main(void)
 {
 	int quantidade;
-	char nomeItem[40], selecao[20];
+	char nomeItem[TAM], selecao[20];
 	float valor;
 
 	lista *alista;
@@ -63,34 +65,73 @@ int main(void)
 		} else if (strcmp(selecao, "CONSULTAR") == 0) 
 			printTotalLista(alista);
 
-		else if (strcmp(selecao, "SAIR") == 0) 
+		else if (strcmp(selecao, "ITENS") == 0) 
+			printItensLista(alista);
+
+		else if (strcmp(selecao, "PROCURAR") == 0) {
+			scanf("%s", nomeItem);
+
+			procurarNome(alista, nomeItem);
+
+		} else if (strcmp(selecao, "SAIR") == 0) 
 			break;
 	}
 	return 0;
 }
 
-void insere (lista *alista, char nomeItem[20], float valor, int quantidade)
+void insere (lista *alista, char nomeItem[TAM], float valor, int quantidade)
 {	
 	item *novo = (item*) malloc(sizeof(item));
 
 	strcpy(novo->nome, nomeItem);
-
-	novo->preco = valor;
-	novo->quantidade = quantidade;
-	novo->totalItem = novo->preco * novo->quantidade;
-	
-	if (alista != NULL) {
-		if (alista->head == NULL) {
-			alista->head = novo;
-			alista->tail = novo;
-		}else {
-			alista->tail->next = novo;
-			alista->tail = novo;
-			novo->next = NULL;
-		}
-		alista->totalLista = alista->totalLista + novo->totalItem;
+	if (quantidade > 0 && quantidade < 1000 && valor > 0.001) {
+		novo->preco = valor;
+		novo->quantidade = quantidade;
+		novo->totalItem = novo->preco * novo->quantidade;
 		
-	} else
+		if (alista != NULL) {
+			if (alista->head == NULL) {
+				alista->head = novo;
+				alista->tail = novo;
+			}else {
+				alista->tail->next = novo;
+				alista->tail = novo;
+				novo->next = NULL;
+			}
+			alista->totalLista = alista->totalLista + novo->totalItem;
+			
+		} else
+			printf("EMPTY STACK!!\n");
+	}
+}
+
+void printItensLista (lista *alista)
+{
+	item *node;
+	node = (item*) malloc(sizeof(item));
+
+	if (alista != NULL) {
+		for (node=alista->head; node!=NULL; node=node->next)
+			printf("|NOME: %s UN: R$%.2f | QUANT.: %d TOTAL: R$%.2f|\n", node->nome, node->preco, node->quantidade, node->totalItem);
+	}
+
+}
+
+void procurarNome (lista *alista, char nomeItem[TAM]) 
+{
+	item *node;
+	node = (item*) malloc(sizeof(item));
+
+	if (alista != NULL) {
+		for (node=alista->head; node!=NULL; node=node->next) {
+			if (strcmp(nomeItem, node->nome) == 0) {
+				printf("- R$%.2f\n- %d\n", node->preco, node->quantidade);
+				return;
+			} else continue;
+		}
+
+		printf("%s nao foi encontrado.\n", nomeItem);
+	} else 
 		printf("EMPTY STACK!!\n");
 }
 
