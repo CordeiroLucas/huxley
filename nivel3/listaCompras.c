@@ -34,7 +34,7 @@ typedef struct item {
 typedef struct lista {
 	item *head;
 	item *tail;
-	int totalLista;
+	float totalLista;
 }lista;
 
 void init (lista *alista);
@@ -44,13 +44,24 @@ void insere (lista *alista, char nomeItem[20], float valor, int quatidade);
 int main(void)
 {
 	int quantidade;
-	char nomeItem[20];
+	char nomeItem[40], selecao[20];
 	float valor;
 
 	lista *alista;
 	alista = (lista*) malloc(sizeof(lista));
 
+	init(alista);
+
+	scanf("%s", selecao);
+
+	if (strcmp(selecao, "INSERIR") == 0) {
+		scanf("%s %f %d", nomeItem, &valor, &quantidade);
 	
+		insere (alista, nomeItem, valor, quantidade);
+	}
+
+	printTotalLista(alista);
+
 	return 0;
 }
 
@@ -58,7 +69,8 @@ void insere (lista *alista, char nomeItem[20], float valor, int quantidade)
 {	
 	item *novo = (item*) malloc(sizeof(item));
 
-	novo->nome[20] = nomeItem;
+	strcpy(novo->nome, nomeItem);
+
 	novo->preco = valor;
 	novo->quantidade = quantidade;
 	novo->totalItem = novo->preco * novo->quantidade;
@@ -74,9 +86,8 @@ void insere (lista *alista, char nomeItem[20], float valor, int quantidade)
 		}
 		alista->totalLista = alista->totalLista + novo->totalItem;
 		
-	} else {
+	} else
 		printf("EMPTY STACK!!\n");
-	}
 }
 
 void init (lista *alista) 
@@ -88,10 +99,5 @@ void init (lista *alista)
 
 void printTotalLista (lista *alista)
 {
-	item *product = (item*) malloc(sizeof(item));
-
-	for (product = alista->head; product!=NULL; product = product->next) 
-		alista->totalLista = product->totalItem + alista->totalLista;
-
-	printf("R$%.2f\n");
+	printf("R$%.2f\n", alista->totalLista);
 }
