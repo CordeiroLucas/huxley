@@ -22,8 +22,76 @@ PROCURAR NOME - procura se o produto de Nome está na lista e retorna seu Nome, 
 #include <stdio.h>
 #include <string.h>
 
-int main (void)
+
+typedef struct item {
+	char nome[20];
+	float preco;
+	int quantidade;
+	float totalItem;
+	struct item *next;
+}item;
+
+typedef struct lista {
+	item *head;
+	item *tail;
+	int totalLista;
+}lista;
+
+void init (lista *alista);
+void printTotalLista (lista *alista);
+void insere (lista *alista, char nomeItem[20], float valor, int quatidade);
+
+int main(void)
 {
+	int quantidade;
+	char nomeItem[20];
+	float valor;
+
+	lista *alista;
+	alista = (lista*) malloc(sizeof(lista));
+
 	
 	return 0;
+}
+
+void insere (lista *alista, char nomeItem[20], float valor, int quantidade)
+{	
+	item *novo = (item*) malloc(sizeof(item));
+
+	novo->nome[20] = nomeItem;
+	novo->preco = valor;
+	novo->quantidade = quantidade;
+	novo->totalItem = novo->preco * novo->quantidade;
+	
+	if (alista != NULL) {
+		if (alista->head == NULL) {
+			alista->head = novo;
+			alista->tail = novo;
+		}else {
+			alista->tail->next = novo;
+			alista->tail = novo;
+			novo->next = NULL;
+		}
+		alista->totalLista = alista->totalLista + novo->totalItem;
+		
+	} else {
+		printf("EMPTY STACK!!\n");
+	}
+}
+
+void init (lista *alista) 
+{	
+	alista->head = NULL;
+	alista->tail = NULL;
+	alista->totalLista = 0;
+}
+
+void printTotalLista (lista *alista)
+{
+	item *product = (item*) malloc(sizeof(item));
+
+	for (product = alista->head; product!=NULL; product = product->next) 
+		alista->totalLista = product->totalItem + alista->totalLista;
+
+	printf("R$%.2f\n");
 }
