@@ -174,12 +174,14 @@ void removerGrupo (lista *alista, float valor)
 {
 	item *node;
 	node = (item*) malloc(sizeof(item));
+	node = alista->head;
 
-	for (node = alista->head; node->next != NULL; node = node->next) {
+	while (node != NULL) {
+
 		if (node->preco > valor) {
-			removerItem (alista, node->nome, 999);
-		} else 
-			continue;
+			removerItem (alista, node->nome, node->quantidade);
+		}
+		node = node->next;
 	}
 }
 
