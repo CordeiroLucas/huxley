@@ -32,18 +32,18 @@ typedef struct lista {
 	float totalLista;
 }lista;
 
-void init (lista *alista);
 void atualizarPrecoLista (lista *alista);
+void init (lista *alista);
 void printItensLista (lista *alista);
 void procurarNome (lista *alista, char nomeItem[TAM]);
 void inserirItem (lista *alista, char nomeItem[TAM], float valor, int quatidade);
-void removerItem (lista *alista, char nomeItem[TAM], int quantidade);
 void removerGrupo (lista *alista, float valor);
+void removerItem (lista *alista, char nomeItem[TAM], int quantidade);
 
 int main(void)
 {
 	int quantidade;
-	char nomeItem[TAM], selecao[20];
+	char nomeItem[TAM], selecao[TAM];
 	float valor;
 
 	lista *alista;
@@ -72,7 +72,7 @@ int main(void)
 			atualizarPrecoLista(alista);
 		
 		} else if (strcmp(selecao, "CONSULTAR") == 0) {
-			printf("R$%.2f\n", alista->totalLista);
+			printf("R$%.1f\n", alista->totalLista);
 
  		} else if (strcmp(selecao, "PROCURAR") == 0) {
 			scanf("%s", nomeItem);
@@ -80,9 +80,15 @@ int main(void)
 			procurarNome(alista, nomeItem);
 
 		} else if (strcmp(selecao, "ITENS") == 0) {
+			/*
+			OPÇÃO PARA VER OS ITENS
+			*/
 			printItensLista(alista);
 
 		} else if (strcmp(selecao, "SAIR") == 0) 
+			/*
+			SAIR DO PROGRAMA
+			*/
 			break;
 	}
 	return 0;
@@ -100,7 +106,6 @@ void atualizarPrecoLista (lista *alista)
 	}
 
 }
-
 
 void init (lista *alista) 
 {	
