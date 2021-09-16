@@ -1,16 +1,11 @@
 /*
-
 QUESTÃO Lista de Compras
-
 Os monitores de Introdução a Programação tentando fazer a comemoração de fim de ano, começaram a fazer a
  lista de itens que eles comprariam pra a festa pra ter uma ideia de quanto iriam gastar.
-
 O problema é que como o grupo era muito grande, ficava muito difícil de operar a lista porque várias pessoas 
  estavam constantemente inserindo novos itens e removendo, então eles decidiram pedir sua ajuda para que 
  conseguissem computar direitinho o preço total da festa.
-
 Você precisa criar um programa que aceite os seguintes comandos:
-
 INSERIR NOME VALOR QUANTIDADE - insere um novo produto com o Nome, Valor de compra e Quantidade de itens
 REMOVER NOME QUANTIDADE - remove uma determinada quantidade de itens (ou todos) de um produto pelo Nome
 REMOVERGRUPO VALOR -  remove todos os produtos que tem seu valor total (por item) maiior que VALOR
@@ -38,7 +33,7 @@ typedef struct lista {
 }lista;
 
 void init (lista *alista);
-float atualizarPrecoLista (lista *alista);
+void atualizarPrecoLista (lista *alista);
 void printItensLista (lista *alista);
 void procurarNome (lista *alista, char nomeItem[TAM]);
 void inserirItem (lista *alista, char nomeItem[TAM], float valor, int quatidade);
@@ -74,10 +69,10 @@ int main(void)
 			scanf("%f", &valor);
 
 			removerGrupo(alista, valor);
-
-		} else if (strcmp(selecao, "CONSULTAR") == 0) {
 			atualizarPrecoLista(alista);
-			printf("\nAtualmente a lista esta em R$%.2f\n", alista->totalLista);
+		
+		} else if (strcmp(selecao, "CONSULTAR") == 0) {
+			printf("R$%.2f\n", alista->totalLista);
 
  		} else if (strcmp(selecao, "PROCURAR") == 0) {
 			scanf("%s", nomeItem);
@@ -93,7 +88,7 @@ int main(void)
 	return 0;
 }
 
-float atualizarPrecoLista (lista *alista)
+void atualizarPrecoLista (lista *alista)
 {
 	item *node;
 	node = (item*) malloc(sizeof(item));
@@ -181,97 +176,61 @@ void removerGrupo (lista *alista, float valor)
 	node = (item*) malloc(sizeof(item));
 
 	for (node = alista->head; node->next != NULL; node = node->next) {
-		if (node->preco < valor)
-			removerItem (alista, node->nome, node->quantidade);
-		else 
+		if (node->preco > valor) {
+			removerItem (alista, node->nome, 999);
+		} else 
 			continue;
 	}
 }
 
-// void removerItem1 (lista *alista, char nomeItem[TAM], int quantidade) 
-// {
-// 	item *node, *temp;
-// 	node = (item*) malloc(sizeof(item));
-// 	temp = (item*) malloc(sizeof(item));
-
-// 	if (alista->head != NULL) {
-// 		for (node = alista->head; node->next != NULL; node = node->next) {
-
-// 			if (strcmp(node->next->nome, nomeItem) == 0) {
-// 				/*
-// 				Para itens que não estão no head
-// 				*/
-// 				if (node->next->quantidade > quantidade) { 
-// 					node->next->quantidade = node->next->quantidade - quantidade;
-// 					node->next->totalItem = node->next->quantidade * node->next->preco;
-// 					break;
-
-// 				} else {
-// 					temp = node->next->next;
-// 					node->next = temp;
-// 					break;
-// 				}
-
-// 			} else if (strcmp(alista->head->nome, nomeItem) == 0) {
-// 				/*
-// 				Para itens que estão no head
-// 				*/
-// 				if (node->quantidade > quantidade) {
-// 					node->quantidade = node->quantidade - quantidade;
-// 					node->totalItem = node->quantidade * node->preco;
-
-// 					break;
-
-// 				} else {
-// 					if (node->next != NULL && alista->head == node) {
-// 						alista->totalLista = alista->totalLista - node->totalItem;
-// 						alista->head = node->next;
-						
-// 						break;
-// 					}
-// 					alista->totalLista = 0;
-// 					alista->head = NULL;
-// 					alista->tail = NULL;
-// 				}
-// 			} else 
-// 				continue;
-// 		}
-// 	} else 
-// 		printf("Lista Vazia!!\n");
-// }
-
-void removerItem (lista *alista, char nomeItem[TAM], int quantidade)
+void removerItem (lista *alista, char nomeItem[TAM], int quantidade) 
 {
-	item *node;
+	item *node, *temp;
 	node = (item*) malloc(sizeof(item));
+	temp = (item*) malloc(sizeof(item));
 
 	if (alista->head != NULL) {
-		for (node = alista->head;node->next != NULL; node = node->next) {
-			if (strcmp(node->nome, alista->head->nome) == 0) {
-				if (quantidade >= node->quantidade) {
-					node->totalItem = 0;
-					alista->head = node->next;
-					free(node);
+		for (node = alista->head; node->next != NULL; node = node->next) {
+
+			if (strcmp(node->next->nome, nomeItem) == 0) {
+				/*
+				Para itens que não estão no head
+				*/
+				if (node->next->quantidade > quantidade) { 
+					node->next->quantidade = node->next->quantidade - quantidade;
+					node->next->totalItem = node->next->quantidade * node->next->preco;
 					break;
+
 				} else {
-					node->quantidade = node->quantidade - quantidade;
-					node->totalItem = node->quantidade * node->preco;
+					temp = node->next->next;
+					node->next = temp;
 					break;
 				}
-			} else {
-				if (strcmp(node->next->nome, nomeItem) == 0) {
-					if (quantidade >= node->next->quantidade) {
-						node->next->totalItem = 0;
-						node->next = node->next->next;
-						break;
-					} else {
-						node->next->quantidade = node->next->quantidade - quantidade;
-						node->totalItem = node->next->quantidade * node->next->preco;
+
+			} else if (strcmp(alista->head->nome, nomeItem) == 0) {
+				/*
+				Para itens que estão no head
+				*/
+				if (node->quantidade > quantidade) {
+					node->quantidade = node->quantidade - quantidade;
+					node->totalItem = node->quantidade * node->preco;
+
+					break;
+
+				} else {
+					if (node->next != NULL && alista->head == node) {
+						alista->totalLista = alista->totalLista - node->totalItem;
+						alista->head = node->next;
+						
 						break;
 					}
-				} else 
-					continue;
-			}
+					alista->totalLista = 0;
+					alista->head = NULL;
+					alista->tail = NULL;
+				}
+			} else 
+				continue;
 		}
-	}
+	} else 
+		printf("Lista Vazia!!\n");
 }
