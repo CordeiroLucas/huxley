@@ -28,38 +28,46 @@ struct fila {
 	int tamanho;
 };
 
+void inicializarFila (struct fila *pessoas);
+void adicionarFila (struct fila *fila_idosos, struct fila *fila_n_idosos, int id, int idade);
+void removerFila (struct fila *pessoas, int nPrioridade);
+void imprimirFilas (struct fila *fila_idosos, struct fila *fila_n_idosos);
+
 int main(void) 
 {
-	struct fila *idoso;
-	struct fila *nIdoso;
+	struct fila *fila_idosos;
+	struct fila *fila_n_idosos;
 
-	idoso = (struct fila*) malloc(sizeof(struct fila));
-	nIdoso = (struct fila*) malloc(sizeof(struct fila));
+	fila_idosos = (struct fila*) malloc(sizeof(struct fila));
+	fila_n_idosos = (struct fila*) malloc(sizeof(struct fila));
+
+	inicializarFila (fila_idosos);
+	inicializarFila (fila_n_idosos);
 
 	int nPrioridade, seqAtendimento, id, idade;
-	char opcao;
+	char *opcao;
 
 	scanf("%d", &nPrioridade);
 
-	opcao = ' ';
+	strcpy (opcao, "p");
 
-	while (strcmp(opcao, 'f') != 0) {
-		scanf("%c", &opcao);
+	while (strcmp(opcao, "f") != 0) {
+		scanf("%c", opcao);
 		
-		if (strcmp(opcao, 'a') == 0) {
+		if (strcmp(opcao, "a") == 0) {
 			scanf("%d %d", &id, &idade);
 
 			/*função adicionar na fila*/
-		} else if (strcmp(opcao, 'r') == 0) {
-			scanf("%d %d", &id, &idade);
+			adicionarFila (fila_idosos, fila_n_idosos, id, idade);
 
+		} else if (strcmp(opcao, "r") == 0) {
+		
 			/*função remover seguindo a ordem de preferência*/
-		} else if (strcmp(opcao, 'i') == 0 ) {
+		} else if (strcmp(opcao, "i") == 0 ) {
 			
 			/*função imprimir as duas filas*/
-
-			imprimirFilas (idoso, nIdoso);
-		}else {
+			imprimirFilas (fila_idosos, fila_n_idosos);
+		}else if (strcmp(opcao, "f") == 0) {
 			/*finaliza*/
 			return 0;
 		}
@@ -69,15 +77,56 @@ int main(void)
 	return 0;
 }
 
-void imprimirFilas (struct fila *idosos, struct fila *nIdosos)
+void inicializarFila (struct fila *pessoas) 
+{
+	pessoas->head = NULL;
+	pessoas->tail = NULL;
+	pessoas->tamanho = 0;
+}
+
+void adicionarFila (struct fila *fila_idosos, struct fila *fila_n_idosos, int id, int idade) 
+{
+	struct node *pessoa;
+	pessoa = (struct node*) malloc(sizeof(struct node));
+
+	pessoa->id = id;
+	pessoa->idade = idade;
+	pessoa->next = NULL;
+
+	if (idade > 60) {
+		if (fila_idosos->head == NULL) {
+			fila_idosos->head = pessoa;
+			fila_idosos->tail = pessoa;
+			fila_idosos->tamanho++;
+		} else {
+			fila_idosos->tail->next = pessoa;
+			fila_idosos->tail = pessoa;
+			fila_idosos->tamanho++;
+		}
+		
+	} else {
+		if (fila_n_idosos->head == NULL) {
+			fila_n_idosos->head = pessoa;
+			fila_n_idosos->tail = pessoa;
+			fila_n_idosos->tamanho++;
+		} else {
+			fila_n_idosos->tail->next = pessoa;
+			fila_n_idosos->tail = pessoa;
+			fila_n_idosos->tamanho++;
+		}
+	}
+
+}
+
+void imprimirFilas (struct fila *fila_idosos, struct fila *fila_n_idosos)
 {	
 	struct node *pessoa;
 	pessoa = (struct node*) malloc(sizeof(struct node));
 
 	
-	printf("\nfila de idosos:\n");
-	if (idosos != NULL) {
-		pessoa = idosos->head;
+	printf("\n%d na fila de idosos:\n", fila_idosos->tamanho);
+	if (fila_idosos != NULL) {
+		pessoa = fila_idosos->head;
 
 		while (pessoa != NULL) {
 			printf("ID: %d IDADE: %d\n", pessoa->id, pessoa->idade);
@@ -88,9 +137,9 @@ void imprimirFilas (struct fila *idosos, struct fila *nIdosos)
 	}
 	
 	
-	printf("fila de não-idosos:\n");
-	if (nIdosos != NULL) {
-		pessoa = nIdosos->head;
+	printf("%d na fila de não-idosos:\n", fila_n_idosos->tamanho);
+	if (fila_n_idosos != NULL) {
+		pessoa = fila_n_idosos->head;
 
 		while (pessoa != NULL) {
 			printf("ID: %d IDADE: %d\n", pessoa->id, pessoa->idade);
