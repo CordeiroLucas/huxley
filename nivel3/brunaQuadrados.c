@@ -76,7 +76,10 @@ int quadrado (int N, int matriz[N][N])
 					}
 				}
 			}
-
+			
+		/*
+		print para checar se ele está contando certo
+		*/
 		printf("y[%d] - lengh %d - lengh starts on [%d][%d]", j, lengh, posicaoX, j);
 		printf("\n");
 	}
