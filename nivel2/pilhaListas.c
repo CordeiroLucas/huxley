@@ -43,14 +43,14 @@ int main(void)
 	iniciaPilha (apilha);
 
 	while (scanf("%s", acao) != EOF) {
-		printf("while\n\n");
+		// printf("while\n\n");
 
 		if (strcmp(acao, "PUSH") == 0) {
-			printf("opcao1\n");
+			// printf("opcao1\n");
 			pushPilha(apilha);
 
 		} else if (strcmp(acao, "POP") == 0) {
-			printf("opcao2\n");
+			// printf("opcao2\n");
 			popPilha(apilha);
 		}
 	}
@@ -59,7 +59,7 @@ int main(void)
 
 struct lista criaLista ()
 {
-	printf("crialista\n");
+	// printf("crialista\n");
 	int numero;
 	struct nodeLista *novo;
 	struct lista *alista;
@@ -96,7 +96,7 @@ void iniciaPilha (struct pilha *apilha) {
 }
 
 void pushPilha (struct pilha *apilha) {
-	printf("push\n");
+	// printf("push\n");
 
 	struct lista *novaLista;
 	struct nodePilha *novo;
@@ -111,7 +111,7 @@ void pushPilha (struct pilha *apilha) {
 
 struct lista popPilha (struct pilha *apilha) {
 	struct nodePilha *temp;
-	printf("pop\n");
+	// printf("pop\n");
 
 	if (apilha->topo != NULL) {
 		temp = apilha->topo;
@@ -125,7 +125,7 @@ struct lista popPilha (struct pilha *apilha) {
 }
 
 void printLista (struct lista *alista) {
-	printf("print\n");
+	// printf("print\n");
 	struct nodeLista *no;
 
 	if (alista->head != NULL) {
