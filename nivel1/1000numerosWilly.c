@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(void) {
+int main(void) 
+{
 	const int MAX = 1000;
 	int i, k, n, num, array[MAX];
-		
 	for (i=0;i<=MAX;i++) {
 		if (n != -1) {
 			if (i!=MAX){
