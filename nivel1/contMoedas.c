@@ -9,7 +9,7 @@ int main(void)
 
 	scanf("%f", &valor);
 
-       if (valor >= 100) {
+    if (valor >= 100) {
 		notas100 = valor / 100;
 		printf("%d nota(s) de R$ 100.00\n", notas100);
 		valor = valor - (100*notas100);
