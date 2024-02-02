@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/lucas/OneDrive/Documentos/GitHub/huxley/nivel1",
-      "program": "c:/Users/lucas/OneDrive/Documentos/GitHub/huxley/nivel1/build/Debug/outDebug",
+      "cwd": "c:/Users/lucas/Desktop/projetos/huxley/nivel1",
+      "program": "c:/Users/lucas/Desktop/projetos/huxley/nivel1/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
